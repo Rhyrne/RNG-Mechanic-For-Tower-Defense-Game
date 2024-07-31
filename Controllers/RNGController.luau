@@ -4,10 +4,10 @@ RNGController.__index = RNGController
 
 local self = setmetatable({}, RNGController)
 self.Rarities = {
-	1, -- Legendary
-	15, -- Epic
-	34, -- Rare
-	50 -- Common
+	{ weight = "1", name = "Legendary" },
+	{ weight = "15", name = "Epic" },
+	{ weight = "34", name = "Rare" },
+	{ weight = "50", name = "Common" }
 }
 
 function RNGController.randomNumberGenerator(lengthOfTable)
@@ -40,18 +40,11 @@ end
 function RNGController.chooseRarity()
 	local randomNumber = math.random(1,100)
 	local counter = 0
-	for rarity,weight in pairs(self.Rarities) do
-		counter += weight
+	
+	for _,rarity in pairs(self.Rarities) do
+		counter += rarity.weight
 		if randomNumber <= counter then
-			if counter == 1 then
-				return "Legendary"
-			elseif counter == 16 then
-				return "Epic"
-			elseif counter == 50 then
-				return "Rare"
-			else
-				return "Common"
-			end
+			return rarity.name
 		end
 	end
 end
